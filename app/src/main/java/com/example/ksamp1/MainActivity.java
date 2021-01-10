@@ -43,9 +43,8 @@ public class MainActivity extends AppCompatActivity {
     class ClientThread extends Thread {
         @Override
         public void run() {
-            int port = 3337;
-            String host = "122.34.51.3";
-            //String host = "192.168.219.117";
+            int port = 1234;
+            String host = "192.168.0.1";
             try {
                 Socket socket = new Socket(host, port);
                 //ObjectOutputStream outStream = new ObjectOutputStream(socket.getOutputStream());
