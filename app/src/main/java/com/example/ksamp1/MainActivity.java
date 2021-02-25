@@ -64,15 +64,17 @@ public class MainActivity extends AppCompatActivity {
         chatView = (TextView) findViewById(R.id.chatView);
         message = (EditText) findViewById(R.id.message);
 
+/*
         //Intent intent = getIntent();
-        Intent intent = new Intent(MainActivity.this, EnterActivity.class);
+        //Intent intent = new Intent(MainActivity.this, EnterActivity.class);
         // startActivity(intent);
-        startActivityForResult(intent, 101);
+        //startActivityForResult(intent, 101);
+
+
 
         UserID = intent.getStringExtra("username");
         textView.setText(UserID);
         chatbutton = (Button) findViewById(R.id.chatbutton);
-
         new Thread() {
             public void run() {
                 try {
@@ -111,6 +113,72 @@ public class MainActivity extends AppCompatActivity {
                 }.start();
             }
         });
+ */
+    }
+
+    public void OnClickLogin(View view)
+    {
+        //Intent intent = getIntent();
+        //Intent intent = new Intent(MainActivity.this, EnterActivity.class);
+        // startActivity(intent);
+        //startActivityForResult(intent, 101);
+
+        Intent intent = new Intent(MainActivity.this,EnterActivity.class);
+        // startActivityForResult(intent, Code.requestCode);
+        startActivityForResult(intent, 101);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent)
+    {
+        if(requestCode == Code.requestCode && resultCode == Code.resultCode) {
+            // textView_name.setText(resultIntent.getStringExtra("name"));
+            // textView_number.setText(resultIntent.getStringExtra("number"));
+
+            UserID = resultIntent.getStringExtra("username");
+            textView.setText(UserID);
+            chatbutton = (Button) findViewById(R.id.chatbutton);
+            new Thread() {
+                public void run() {
+                    try {
+                        InetAddress serverAddr = InetAddress.getByName(ip);
+                        socket = new Socket(serverAddr, port);
+                        sendWriter = new PrintWriter(socket.getOutputStream());
+                        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        while(true){
+                            read = input.readLine();
+
+                            System.out.println("TTTTTTTT"+read);
+                            if(read!=null){
+                                mHandler.post(new msgUpdate(read));
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } }}.start();
+
+            chatbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendmsg = message.getText().toString();
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                sendWriter.println(UserID +">"+ sendmsg);
+                                sendWriter.flush();
+                                message.setText("");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                }
+            });
+
+        }
+
     }
 
     class msgUpdate implements Runnable{
