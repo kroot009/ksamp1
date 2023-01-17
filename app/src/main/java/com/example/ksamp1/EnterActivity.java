@@ -17,7 +17,7 @@ public class EnterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter);
 //        enterButton = (Button)findViewById(R.id.enterButton);
-        editText = (EditText)findViewById(R.id.editText);
+        // editText = (EditText)findViewById(R.id.editText);
 
         /*
         enterButton.setOnClickListener(new View.OnClickListener() {

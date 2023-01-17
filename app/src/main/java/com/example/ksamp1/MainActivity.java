@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         chatView = (TextView) findViewById(R.id.chatView);
         message = (EditText) findViewById(R.id.message);
+        chatbutton = (Button) findViewById(R.id.chatbutton);
 
 /*
         //Intent intent = getIntent();
@@ -137,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
             UserID = resultIntent.getStringExtra("username");
             textView.setText(UserID);
-            chatbutton = (Button) findViewById(R.id.chatbutton);
+
+/***
             new Thread() {
                 public void run() {
                     try {
@@ -176,11 +178,12 @@ public class MainActivity extends AppCompatActivity {
                     }.start();
                 }
             });
-
+**/
         }
 
     }
 
+    /**
     class msgUpdate implements Runnable{
         private String msg;
         public msgUpdate(String str) {this.msg=str;}
@@ -190,4 +193,10 @@ public class MainActivity extends AppCompatActivity {
             chatView.setText(chatView.getText().toString()+msg+"\n");
         }
     }
+        **/
+    public void OnClickChat(View view)
+    {
+        ;
+    }
+
 }
